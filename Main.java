@@ -109,7 +109,28 @@ public class Main {
 
 
     public static String bestMonthForCommodity(String comm) {
-        return "DUMMY";
+        if (comm == null) return "INVALID_COMMODITY";
+        int cIdx = -1;
+        for (int i = 0; i < COMMS; i++) {
+            if (commodities[i].equals(comm)) {
+                cIdx = i;
+                break;
+            }
+        }
+        if (cIdx == -1) return "INVALID_COMMODITY";
+        int bestProfit = Integer.MIN_VALUE;
+        int bestMonth=0;
+        for (int m = 0; m < MONTHS; m++) {
+            int monthProfit = 0;
+            for (int d = 0; d < DAYS; d++) {
+                monthProfit += profit[m][cIdx][d];
+
+            }if(monthProfit > bestProfit) {
+                bestProfit = monthProfit;
+                bestMonth =m;
+
+            }
+        }return months[bestMonth];
     }
 
     public static int consecutiveLossDays(String comm) {
@@ -137,3 +158,4 @@ public class Main {
         System.out.println("Data loaded – ready for queries");
     }
 }
+
