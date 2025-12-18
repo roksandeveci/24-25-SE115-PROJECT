@@ -1,4 +1,3 @@
-// Main.java — Students version
 import java.io.*;
 import java.util.*;
 
@@ -109,7 +108,7 @@ public class Main {
 
 
     public static String bestMonthForCommodity(String comm) {
-        if (comm == null) return "INVALID_COMMODITY";
+        if (comm == null) return "INVALIDCOMMODITY";
         int cIdx = -1;
         for (int i = 0; i < COMMS; i++) {
             if (commodities[i].equals(comm)) {
@@ -134,16 +133,84 @@ public class Main {
     }
 
     public static int consecutiveLossDays(String comm) {
-        return 1234;
+        if (comm == null) return -1;
+        int cIdx = -1;
+        for (int i = 0; i < COMMS; i++) {
+            if (commodities[i].equals(comm)) {
+                cIdx = i;
+                break;
+            }
+        }if (cIdx == -1) return -1;
+        int maxStreakCount=0;
+        int streakCount=0;
+
+        for(int m=0;m<MONTHS;m++){
+            for(int d=0;d<DAYS;d++){
+                if(profit[m][cIdx][d]<0){
+                    streakCount++;
+                    if(streakCount>maxStreakCount){
+                        maxStreakCount=streakCount;
+                    }
+                }else{
+                    streakCount=0;
+                }
+            }
+        }return maxStreakCount;
     }
 
     public static int daysAboveThreshold(String comm, int threshold) {
-        return 1234;
-    }
+            if (comm == null) return -1;
+
+            int cIdx = -1;
+            for (int i = 0; i < COMMS; i++) {
+                if (commodities[i].equals(comm)) {
+                    cIdx = i;
+                    break;
+                }
+            }
+            if (cIdx == -1) return -1;
+
+            int count = 0;
+
+            for (int m = 0; m < MONTHS; m++) {
+                for (int d = 0; d < DAYS; d++) {
+                    if (profit[m][cIdx][d] > threshold) {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+
 
     public static int biggestDailySwing(int month) {
-        return 1234;
-    }
+            if (month < 0 || month >= 12) return -9999;
+
+            int maxSwing = 0;
+
+            for (int d = 0; d < 27; d++) {
+                int totalToday = 0;
+                int totalTomorrow = 0;
+
+                for (int c = 0; c < 5; c++) {
+                    totalToday += profit[month][c][d];
+                    totalTomorrow += profit[month][c][d + 1];
+                }
+
+                int diff = totalToday - totalTomorrow;
+                if (diff < 0) diff = -diff;
+
+                if (diff > maxSwing) {
+                    maxSwing = diff;
+                }
+            }
+
+            return maxSwing;
+        }
+
+
 
     public static String compareTwoCommodities(String c1, String c2) {
         return "DUMMY is better by 1234";
@@ -157,5 +224,4 @@ public class Main {
         loadData();
         System.out.println("Data loaded – ready for queries");
     }
-}
-
+    }
