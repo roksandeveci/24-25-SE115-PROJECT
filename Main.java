@@ -240,12 +240,39 @@ public class Main {
                 return "C2 is better by " + (sum2 - sum1);
             else
                 return "Equal";
-        
+
 
     }
 
     public static String bestWeekOfMonth(int month) {
-        return "DUMMY";
+            if (month < 1 || month > MONTHS) {
+                return "INVALID_MONTH";
+            }
+
+            int mIdx = month - 1;   
+            int[] weekSums = new int[4];
+            
+            for (int d = 0; d < 28; d++) {
+                int weekIndex = d / 7; 
+
+                int dayTotal = 0;
+                for (int c = 0; c < COMMS; c++) {
+                    dayTotal += profit[mIdx][c][d];
+                }
+
+                weekSums[weekIndex] += dayTotal;
+            }
+            
+            int bestWeek = 0;
+            for (int i = 1; i < 4; i++) {
+                if (weekSums[i] > weekSums[bestWeek]) {
+                    bestWeek = i;
+                }
+            }
+
+            return "Week " + (bestWeek + 1);
+        
+
     }
 
     public static void main(String[] args) {
