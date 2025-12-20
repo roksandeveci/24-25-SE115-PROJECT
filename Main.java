@@ -1,3 +1,4 @@
+// Main.java — Students version
 import java.io.*;
 import java.util.*;
 
@@ -213,7 +214,34 @@ public class Main {
 
 
     public static String compareTwoCommodities(String c1, String c2) {
-        return "DUMMY is better by 1234";
+            if (c1 == null || c2 == null) return "INVALID_COMMODITY";
+
+            int idx1 = -1, idx2 = -1;
+
+            for (int i = 0; i < COMMS; i++) {
+                if (commodities[i].equals(c1)) idx1 = i;
+                if (commodities[i].equals(c2)) idx2 = i;
+            }
+
+            if (idx1 == -1 || idx2 == -1) return "INVALID_COMMODITY";
+
+            int sum1 = 0, sum2 = 0;
+
+            for (int m = 0; m < MONTHS; m++) {
+                for (int d = 0; d < DAYS; d++) {
+                    sum1 += profit[m][idx1][d];
+                    sum2 += profit[m][idx2][d];
+                }
+            }
+
+            if (sum1 > sum2)
+                return "C1 is better by " + (sum1 - sum2);
+            else if (sum2 > sum1)
+                return "C2 is better by " + (sum2 - sum1);
+            else
+                return "Equal";
+        
+
     }
 
     public static String bestWeekOfMonth(int month) {
