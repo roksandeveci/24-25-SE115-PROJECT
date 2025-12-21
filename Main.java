@@ -1,49 +1,4 @@
-// Main.java — Students version
-import java.io.*;
-import java.util.*;
-
-public class Main {
-    static final int MONTHS = 12;
-    static final int DAYS = 28;
-    static final int COMMS = 5;
-    static String[] commodities = {"Gold", "Oil", "Silver", "Wheat", "Copper"};
-    static String[] months = {"January","February","March","April","May","June",
-            "July","August","September","October","November","December"};
-
-    public static int[][][] profit;
-
-
-    // ======== REQUIRED METHOD LOAD DATA (Students fill this) ========
-    public static void loadData() {
-        profit = new int[MONTHS][COMMS][DAYS];
-    }
-
-    // ======== 10 REQUIRED METHODS (Students fill these) ========
-
-    public static String mostProfitableCommodityInMonth(int month) {
-            if (month < 0 || month > 11) return "INVALID_MONTH";
-
-            int bestCommodityIdx = 0;
-            int bestTotal = Integer.MIN_VALUE;
-
-            for (int c = 0; c < 5; c++) {
-                int total = 0;
-                for (int d = 0; d < 28; d++) {
-                    total += profit[month][c][d];
-                }
-
-                if (total > bestTotal) {
-                    bestTotal = total;
-                    bestCommodityIdx = c;
-                }
-            }
-
-            return commodities[bestCommodityIdx] + " " + bestTotal;
-        }
-
-
-
-    public static int totalProfitOnDay(int month, int day) {
+day) {
             if (month < 0 || month > 11) return -9999;
             if (day < 1 || day > 28) return -9999;
 
@@ -249,11 +204,11 @@ public class Main {
                 return "INVALID_MONTH";
             }
 
-            int mIdx = month - 1;   
+            int mIdx = month - 1;
             int[] weekSums = new int[4];
-            
+
             for (int d = 0; d < 28; d++) {
-                int weekIndex = d / 7; 
+                int weekIndex = d / 7;
 
                 int dayTotal = 0;
                 for (int c = 0; c < COMMS; c++) {
@@ -262,7 +217,7 @@ public class Main {
 
                 weekSums[weekIndex] += dayTotal;
             }
-            
+
             int bestWeek = 0;
             for (int i = 1; i < 4; i++) {
                 if (weekSums[i] > weekSums[bestWeek]) {
@@ -271,7 +226,7 @@ public class Main {
             }
 
             return "Week " + (bestWeek + 1);
-        
+
 
     }
 
